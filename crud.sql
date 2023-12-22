@@ -15,13 +15,6 @@ CREATE TABLE car_maintenance_status (
     status VARCHAR(50) DEFAULT 'Available',
     FOREIGN KEY (car_id) REFERENCES cars(car_id)
 );
-CREATE TABLE checkin_checkout_log (
-    log_id INT PRIMARY KEY AUTO_INCREMENT,
-    car_id INT,
-    employee_id INT,
-    checkin_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    checkout_time TIMESTAMP
-);
 CREATE TABLE car_reservations (
     reservation_id INT PRIMARY KEY AUTO_INCREMENT,
     car_id INT,
