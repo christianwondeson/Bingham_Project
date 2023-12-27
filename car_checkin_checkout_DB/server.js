@@ -29,16 +29,30 @@
 //   }
 // });
 
-
-const express = require('express');
-const mysql = require('mysql');
+const express = require("express");
+const mysql = require("mysql");
 var app = express();
+const connection = require("./database");
 
-
-app.get('/', (req, res) => {
-    res.send("hey there!sucker");
+app.get("/", (req, res) => {
+  let sql = "SELECT * FROM cars";
+  connection.query(sql, function (error, result) {
+    if (error) throw error;
+    res.send(JSON.stringify(result));
+  });
 });
 
-app.listen(3000, ()=>{
-    console.log("App listening on port 3000");
+app.get("/employees", (req, res) => {
+  connection.query(`SELECT * FROM employees`, function (error, result) {
+    if(error) throw error;
+    res.send(JSON.stringify(result));
+  })
+});
+
+app.listen(3000, () => {
+  console.log("App listening on port 3000");
+  connection.connect(function (err) {
+    if (err) throw err;
+    console.log("Database connected successfully");
+  });
 });
