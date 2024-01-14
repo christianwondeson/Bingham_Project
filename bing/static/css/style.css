@@ -1,10 +1,15 @@
+/* /static/css/style.css */
+
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
     background-color: #f8f8f8;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 .chat-container {
+    display: none;
     max-width: 400px;
     margin: 50px auto;
     background-color: #fff;
@@ -63,7 +68,6 @@ button {
     border-radius: 5px;
     max-width: 70%;
     align-self: flex-end;
-    animation: fadeInUp 0.5s ease-in-out;
 }
 
 .bot-message {
@@ -74,53 +78,10 @@ button {
     border-radius: 5px;
     max-width: 70%;
     align-self: flex-start;
-    animation: fadeInUp 0.5s ease-in-out;
 }
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-/* /static/css/style.css */
-
-/* ... (previous styles) */
 
 .clickable {
-    display: inline-block;
-    background-color: #007bff;
-    color: #fff;
-    padding: 8px 12px;
-    margin: 5px;
-    border-radius: 5px;
+    color: #007bff;
+    text-decoration: underline;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
-}
-
-.clickable:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
-.clickable:active {
-    transform: scale(0.95);
-}
-
-.clickable-question {
-    opacity: 0;
-    animation: fadeIn 1s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
 }

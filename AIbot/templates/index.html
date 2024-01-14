@@ -1,44 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles.css') }}"
-    />
-    <title>Bingham School ChatBot</title>
-  </head>
-  <body>
-    <!-- Chatbot Button -->
-    <div id="chatbot-button" class="chatbot-button">
-      <span>&#10149;</span> Chat with Us
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Bingham School Chatbot</title>
+</head>
+<body>
+    <div class="chatbot-container">
+        <button id="chatbot-button" class="chatbot-button">Chat with us</button>
+        <div id="chatbot-popup" class="chatbot-popup">
+            <div class="chatbot-header">
+                <span class="close-button" id="close-button">&times;</span>
+                <div class="chatbot-title">Bingham School Chatbot</div>
+            </div>
+            <div id="chatbot-content" class="chatbot-content"></div>
+            <div class="chatbot-input-container">
+                <select id="questions" class="question-dropdown"></select>
+                <button onclick="askQuestion()" class="ask-button">Ask</button>
+            </div>
+        </div>
     </div>
-
-    <!-- Chatbot Popup -->
-    <div id="chatbot-popup" class="chatbot-popup">
-      <div id="chatbot-header" class="chatbot-header">
-        <span id="close-button" class="close-button" onclick="closeChatbot()"
-          >&times;</span
-        >
-        <h2>Bingham School ChatBot</h2>
-      </div>
-      <div id="question-dropdown" class="question-dropdown">
-        <label for="questions">Select a Question:</label>
-        <select id="questions">
-          <!-- Questions will be dynamically added here using JavaScript -->
-        </select>
-        <button onclick="askQuestion()">Ask</button>
-      </div>
-      <div id="chatbot-content" class="chatbot-content">
-        <!-- Chatbot responses will appear here -->
-      </div>
-      <div id="chatbot-input" class="chatbot-input">
-        <input type="text" id="user-input" placeholder="Type your message..." />
-        <button onclick="sendMessage()">Send</button>
-      </div>
-    </div>
-    <!-- Include JavaScript -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-  </body>
+</body>
 </html>

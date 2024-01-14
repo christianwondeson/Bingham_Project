@@ -1,72 +1,97 @@
+# app.py
+
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
-import spacy
+import nltk
+from nltk.stem import WordNetLemmatizer
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 CORS(app)
 
-# Load Spacy English model
-nlp = spacy.load("en_core_web_sm")
+# Initialize NLTK
+nltk.download('punkt')
+nltk.download('wordnet')
+lemmatizer = WordNetLemmatizer()
 
-# Merge the general responses and clickable questions into one dictionary
+# Bingham Academy specific responses for the chatbot
 responses = {
-    "greeting": "Hello! How can I assist you with information about our international school?",
+    "greeting": "Hello! How can I assist you with information about Bingham Academy?",
     "goodbye": "Goodbye! If you have more questions, feel free to ask.",
-    "admissions": "Our admissions process typically includes an application, interviews, and required documents. Do you have specific questions about admissions?",
-    "curriculum": "We follow a [Your School's Name] curriculum, which focuses on [Brief Description of Curriculum].",
-    "facilities": "Our school provides state-of-the-art facilities, including classrooms, laboratories, sports facilities, and more.",
-    "teachers": "Our teaching staff is highly qualified and experienced in delivering quality education. Do you want to know more about a specific teacher or department?",
-    "sports": "We offer a variety of sports activities and have dedicated facilities for sports enthusiasts. What specific sport are you interested in?",
-    "events": "We host various events throughout the academic year, including sports meets, cultural events, and parent-teacher conferences.",
-    "default": "I'm here to help! If you have specific questions about Bingham Academy, feel free to ask.",
+    "admissions": "Our admissions process at Bingham Academy includes submitting an application form, attending an interview, and providing necessary documents. If you have specific questions, feel free to ask.",
+    "curriculum": "Bingham Academy follows an internationally recognized curriculum, incorporating elements from the International Baccalaureate (IB) program. Our curriculum emphasizes a well-rounded education.",
+    "facilities": "Bingham Academy boasts modern facilities, including well-equipped classrooms, science laboratories, sports facilities, and a library. We prioritize providing a conducive learning environment.",
+    "teachers": "Our teaching staff at Bingham Academy consists of highly qualified and experienced educators dedicated to fostering a supportive learning environment. If you have specific teachers in mind, let me know!",
+    "sports": "Bingham Academy offers a range of sports, including soccer, basketball, volleyball, track and field, and more. We encourage students to participate in physical activities for their holistic development.",
+    "events": "Bingham Academy hosts various events throughout the academic year, such as cultural festivals, sports meets, and parent-teacher conferences. Stay tuned for announcements!",
+    "default": "I'm sorry, I didn't understand that. Please feel free to ask another question about Bingham Academy.",
 }
 
 # Dictionary to map lowercase versions of clickable questions to responses
 clickable_questions_dict = {
-    "tell me about admissions": "The admissions process at Bingham Academy involves submitting an application, attending an interview, and providing necessary documents. Do you have specific questions about admissions?",
-    "what is the curriculum?": "Bingham Academy follows a curriculum designed to provide a well-rounded education with a Christian perspective. It covers a range of subjects to prepare students for a globally competitive world.",
-    "can you explain the facilities?": "Our school boasts modern facilities, including spacious classrooms, well-equipped laboratories, a library, sports fields, and more. Is there a specific facility you would like to know more about?",
-    "who are the teachers?": "Our teaching staff at Bingham Academy is composed of highly qualified and experienced educators dedicated to providing quality education. If you have a specific teacher or department in mind, feel free to ask.",
-    "what sports do you offer?": "Bingham Academy offers a variety of sports, including soccer, basketball, volleyball, and track and field. Students are encouraged to participate in sports activities for physical fitness and character development.",
-    "any upcoming events?": "We regularly organize events such as sports meets, cultural festivals, and parent-teacher conferences at Bingham Academy. Stay tuned for our upcoming events and join us in the celebrations!",
+    "tell me about admissions": responses["admissions"],
+    "what is the curriculum?": responses["curriculum"],
+    "can you explain the facilities?": responses["facilities"],
+    "who are the teachers?": responses["teachers"],
+    "what sports do you offer?": responses["sports"],
+    "any upcoming events?": responses["events"],
 }
 
+
 def process_text(text):
-    # Process the text using spaCy
-    doc = nlp(text)
-    # Extract lemmatized tokens
-    tokens = [token.lemma_ for token in doc]
-    return tokens
+    # Tokenize and lemmatize the input text
+    tokens = nltk.word_tokenize(text)
+    lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
+
+    # Perform additional processing if needed
+
+    return lemmatized_tokens
+
 
 def get_response(user_input):
     # Process user input
     processed_input = process_text(user_input)
 
-    # Check for clickable questions first
-    for keyword, response in clickable_questions_dict.items():
-        if any(keyword.lower() in processed_input for keyword in response.split()):
-            return response
-
     # Example logic for generating responses
-    for keyword, response in responses.items():
-        if any(keyword in processed_input):
+    if any(keyword in processed_input for keyword in ["hello", "hi", "hey"]):
+        return responses["greeting"]
+    elif any(keyword in processed_input for keyword in ["bye", "goodbye"]):
+        return responses["goodbye"]
+    elif any(keyword in processed_input for keyword in ["admissions", "apply"]):
+        return responses["admissions"]
+    elif any(keyword in processed_input for keyword in ["curriculum", "courses"]):
+        return responses["curriculum"]
+    elif any(keyword in processed_input for keyword in ["facilities", "building", "infrastructure"]):
+        return responses["facilities"]
+    elif any(keyword in processed_input for keyword in ["teacher", "faculty"]):
+        return responses["teachers"]
+    elif any(keyword in processed_input for keyword in ["sports", "athletics"]):
+        return responses["sports"]
+    elif any(keyword in processed_input for keyword in ["events", "activities"]):
+        return responses["events"]
+    else:
+        return get_clickable_response(processed_input)
+
+
+def get_clickable_response(processed_input):
+    # Respond to clickable questions based on the predefined responses
+    for keyword, response in clickable_questions_dict.items():
+        if any(word in processed_input for word in keyword.split()):
             return response
 
-    # If no match is found, respond with the default message
     return responses["default"]
+
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
+
 @app.route('/get_response', methods=['POST'])
 def get_bot_response():
-    try:
-        user_message = request.json['user_message']
-        bot_response = get_response(user_message)
-        return jsonify({'bot_response': bot_response})
-    except Exception as e:
-        return jsonify({'bot_response': f"An error occurred: {str(e)}"}), 500
+    user_message = request.json['user_message']
+    bot_response = get_response(user_message)
+    return jsonify({'bot_response': bot_response})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
