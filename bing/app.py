@@ -1,6 +1,6 @@
 # app.py
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, url_for
 from flask_cors import CORS
 import nltk
 from nltk.stem import WordNetLemmatizer
@@ -91,6 +91,11 @@ def get_bot_response():
     user_message = request.json['user_message']
     bot_response = get_response(user_message)
     return jsonify({'bot_response': bot_response})
+
+@app.route('/get_bot_icon_url', methods=['GET'])
+def get_bot_icon_url():
+    bot_icon_url = url_for('static', filename='img/robot.png')
+    return jsonify({'bot_icon_url': bot_icon_url})
 
 
 if __name__ == '__main__':

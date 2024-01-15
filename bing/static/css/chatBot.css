@@ -18,7 +18,7 @@
     bottom: 82px;
 }
 .chat-screen .chat-header {
-    background-image: linear-gradient(to right, #0e58c6, #813bcb, #9e38de, #bc32ef, #dc22ff);
+    background-image: linear-gradient(to right,  #3a8fb7, #3ba9cb);
     border-radius: 15px 15px 0 0;
     padding: 15px;
     display: block;
@@ -66,7 +66,7 @@
     border-radius: 30px;
 }
 .chat-screen .chat-mail button {
-    background-image: linear-gradient(to right, #673ab7, #813bcb, #9e38de, #bc32ef, #dc22ff);
+    background-image: linear-gradient(to right,  #3a8fb7, #3ba9cb);
     border: none;
     padding: 0.58rem 1.25rem;
     transition: transform 0.5s ease;
@@ -102,7 +102,7 @@
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.02);
 }
 .chat-screen .chat-body .chat-bubble.you {
-    background-image: linear-gradient(to right, #0141a1, #813bcb, #9e38de, #bc32ef, #dc22ff);
+    background-image: linear-gradient(to right,  #3a8fb7, #3ba9cb);
     color: #fff;
     border-radius: 0 15px 15px 15px;
     align-self: flex-start;
@@ -233,7 +233,7 @@
     right: 20px;
     height: 50px;
     width: 50px;
-    background-image: linear-gradient(to right, #673ab7, #813bcb, #9e38de, #bc32ef, #dc22ff);
+    background-image: linear-gradient(to right, #3a8fb7, #3ba9cb);
     z-index: 9999;
     border-radius: 30px;
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
@@ -266,4 +266,99 @@
     transform: rotate(360deg);
     opacity: 1;
     z-index: 1;
+}
+/* Style for clickable questions */
+.clickable {
+    cursor: pointer;
+    padding: 8px;
+    margin: 4px 0;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 4px;
+}
+
+/* Style for chat bubbles */
+.chat-bubble {
+    margin: 8px;
+    padding: 12px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+/* Style for user chat bubble */
+.chat-bubble.you {
+    background-color: #f1f1f1;
+}
+
+/* Style for the chat body (to make it scrollable) */
+#chatBody {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Add these styles for scrolling effect */
+#chatBody::-webkit-scrollbar {
+    width: 8px;
+}
+
+#chatBody::-webkit-scrollbar-thumb {
+    background-color: #3498db;
+    border-radius: 4px;
+}
+
+#chatBody::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+/* Add a new style for bot messages */
+.chat-bubble.bot.bot-message {
+    background-color: #f0f0f0; /* Set your desired background color */
+    color: #333; /* Set your desired text color */
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 10px;
+    max-width: 70%; /* Set a maximum width if needed */
+}
+
+/* Adjust the styling for timestamp if needed */
+.chat-bubble .timestamp {
+    font-size: 12px;
+    color: #000000;
+}
+/* Add styles for bot icon and response */
+.chat-bubble.bot {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.bot-icon {
+    width: 40px; /* Adjust the width of the bot icon */
+    height: 40px; /* Adjust the height of the bot icon */
+    margin-right: 10px; /* Adjust the margin between the icon and the response */
+}
+
+.chat-bubble.bot .message {
+    background-color: #3498db;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+/* Add loading indicator styles */
+.loading {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    animation: spin 1s linear infinite;
+    margin-right: 10px; /* Adjust the margin between the loading indicator and the icon/response */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

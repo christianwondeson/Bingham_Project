@@ -79,9 +79,39 @@ button {
     max-width: 70%;
     align-self: flex-start;
 }
-
 .clickable {
-    color: #007bff;
-    text-decoration: underline;
     cursor: pointer;
+    padding: 8px;
+    margin: 4px 0;
+    background-color: #3498db;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.clickable {
+    cursor: pointer;
+    padding: 8px;
+    margin: 4px 0;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 4px;
+}
+
+/* Style for chat bubbles */
+.chat-bubble {
+    margin: 8px;
+    padding: 12px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+/* Style for user chat bubble */
+.chat-bubble.you {
+    background-color: #f1f1f1;
+}
+
+/* Style for the chat body (to make it scrollable) */
+#chatBody {
+    max-height: 300px; /* Adjust as needed */
+    overflow-y: auto;
 }

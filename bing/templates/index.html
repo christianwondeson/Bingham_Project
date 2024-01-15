@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chatBot.css') }}">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
@@ -20,9 +21,10 @@
                 Bingham Academy Chatbot
             </div>
         </div>
-        <div class="chat-body">
-            <div class="chat-bubble you clickable" data-question="Tell me about the curriculum?">
-                Welcome to Bingham Academy! How can I assist you today?
+        <div class="chat-body" id="chatBody">
+            <div class="chat-bubble bot  bot-message" data-question="Tell me about the curriculum?">
+                <div class = "message">Welcome to Bingham Academy! How can I assist you today?</div>
+                <div class = "timestamp"></div>
             </div>
             <!-- Add more clickable questions here -->
         </div>
